@@ -5,72 +5,72 @@ library(rgdal)
 library(leaflet)
 library(shinycssloaders)
 library(shinythemes)
+library(tibble)
 
 # ui object
 
-fluidPage(
+ui <- fluidPage(
   theme = shinytheme("lumen"),
-  
-  titlePanel(p("Pigeon Management Cost-Effectiveness Model")),
-  
-  
+
+  #title
+  h2 ("Cost-Effective Animal Management via Environmental Capacity"),
+
   leafletOutput(outputId = "map"),
-  ###<headerPanel(""),>increase the grey space. <titlePanel(""),>does not.
-  titlePanel(""),
   
-  sidebarLayout(
-    sidebarPanel(
-      
-      navbarPage("Input"),
-      #tags$style(type = 'text/css', '.navbar { background-color: #C0C0C0;
-      #font-family: Helvetica;
-      #font-size: 50px;
-      #font-style: bold;
-      #color: black; }'),
-      
-      
-      fileInput(
-        inputId = "dens",
-        label = "Upload density. Choose csv file",
-        accept = c(".csv")
-      ),
-      
-      fileInput(
-        inputId = "cost",
-        label = "Upload cost. Choose csv file",
-        multiple = TRUE,
-        accept = c(".csv")
-      ),
-      
-      
-      textInput("gr", "Pigeon growth rate (per month)","0.02775"),
-      
-      textInput("expct", "Density must under____ pigeons/ha"),
-      
-      textInput("mth", "Achieve target in____months"),
-      
-      actionButton("calculate", "Submit", class = "butt"),
-      #tags$head(tags$style(".butt{background-color:#C0C0C0;} .butt{color: black;} .butt{font-family: Helvetica}")),
-    ),#end sidebarPanel
+flowLayout(
+  
+    textInput("le", "Longitude (E)", placeholder="104.0364"),   
+  
+    textInput("lw", "Longitude (W)", placeholder="103.6051"),
+  
+    textInput("ln", "Latitude (N)", placeholder="1.472969"),
+  
+    textInput("ls", "Latitude (S)", placeholder="1.219747"),
+  
+    textInput("nrows", "Number of rows", placeholder="56"),
+  
+    textInput("ncols", "Number of columns", placeholder="96")
+              
+              ),
+  
+  fileInput(
+    inputId = "dens",
+    label = "Upload density (csv file)",
+    accept = c(".csv")
+  ),
+
+   p("Average per hectare in selected cells"),
+   verbatimTextOutput("aver", placeholder = TRUE),
+
+
+flowLayout(  
+  
+    textInput("gr", "Growth rate (per month)",placeholder="0.02775"),
+
+    textInput("expct", "Density must under____ per ha", placeholder="5"),
+  
+    textInput("mth", "Achieve target in____months", placeholder="24")
+  
+    ),
+
+fileInput(
+  inputId = "cost",
+  label = "Upload cost (csv file)",
+  multiple = TRUE,
+  accept = c(".csv")
+),
+
+
+actionButton("calculate", "Submit", class = "btn btn-primary"),
+
     
-    mainPanel(
-      ###<headerPanel(""),>increase the grey space. <titlePanel(""),>does not.
-      titlePanel(""),
-      navbarPage("Output"),
-      
-      p("Average pigeons/ha in selected cells"),
-      verbatimTextOutput("aver", placeholder = TRUE),
-      
-      p("Cost for handling covariates"),
-      verbatimTextOutput("sum_v", placeholder = TRUE),
-      
-      p("Cost for culling"),
-      verbatimTextOutput("sum_c", placeholder = TRUE),
-      
-      p("Detailed management methods:"),
-      downloadButton("downloadData",label = "Save as KML", class = "butt1"),
-      #tags$head(tags$style(".butt1{background-color:#C0C0C0;} .butt1{color: black;} .butt1{font-family: Helvetica}"))
-      
-    )#end mainPanel
-  )#end sidebarLayout
-)#end UI
+    p("Total cost"),
+    verbatimTextOutput("sum_v", placeholder = TRUE),
+  
+    p("Detailed management sugggestions:"),
+    downloadButton("downloadData",label = "Save as KML", class = "btn btn-primary"),
+ 
+    
+
+
+  )#end UI

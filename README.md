@@ -4,7 +4,7 @@ Cost-Effective Animal Management via Environmental Capacity
 ## Installation
 
 ```R
-install.package("shiny")
+install.packages("shiny")
 shiny::runGitHub('CEAMEC', 'qt37t247')
 ```
 

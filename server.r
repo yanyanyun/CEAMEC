@@ -47,7 +47,6 @@ server <- function(input, output, session) {
     mnd <- read.csv(input$mndata$datapath, header=TRUE)
     obsnamesm <- unique(sub("\\..*", "", unlist(strsplit(input$obscolm, ","))))
     
-    browser()
     
     if(length(obsnamesm)!=0){
     obscovsm <- list()
@@ -56,7 +55,6 @@ server <- function(input, output, session) {
       names(obscovsm)[names(obscovsm)=="X"] <- paste(obsnamesm[i])
     }
     } else {obscovsm <- NULL}
-    browser()
     
     umf <- unmarkedFrameMPois(y=mnd[,as.character(unlist(strsplit(input$countcolm, ",")))], 
                                siteCovs=mnd[,unlist(strsplit(input$sitecolm, ","))],
@@ -171,7 +169,6 @@ server <- function(input, output, session) {
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     umf <- mnd()
     
-    browser()
     
     covmodels<-list()
     for (i in as.character(unlist(strsplit(input$det_mn, ",")))){
@@ -181,8 +178,7 @@ server <- function(input, output, session) {
       }
     }
     
-    browser()
-    
+   
     fitsPC <- fitList(fits=covmodels)
     (msPC<-modSel(fitsPC))
     covmodels_df <- data.frame(msPC@Full$model, msPC@Full$nPars, msPC@Full$AIC, msPC@Full$delta, msPC@Full$AICwt, msPC@Full$cumltvWt)

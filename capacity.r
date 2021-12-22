@@ -84,4 +84,5 @@ Capacity<-function(bestmodel, costs, rate, P_dens, ly, expect, area, time){
   colnames(final)[1:4] <- c("Scenarios","Costs","Pre-management","Post-management")
   
   return(final)
+  
 }#######End function Capacity

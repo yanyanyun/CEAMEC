@@ -1,5 +1,5 @@
 ## cost effectiveness management methods for covariates
-function(bestmodel, costs, rate, P_dens, ly, expect, area, time){
+Capacity <- function(bestmodel, costs, rate, P_dens, ly, expect, area, time){
   coeffs <- as.data.frame(bestmodel@estimates@estimates$state@estimates)
   name_coeffs <- as.data.frame(names(bestmodel@estimates@estimates$state@estimates))
   row.names(coeffs) <- NULL

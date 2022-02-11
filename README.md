@@ -1,6 +1,13 @@
 # CEAMEC v1.0
 Cost-Effective Animal Management via Environmental Capacity
 
+## Demo-videos
+Running in Shiny Cloud:
+https://youtu.be/_wW5g42nHcg
+
+Running in RStudio
+https://youtu.be/mg-trms15hI
+
 ## Installation
 
 ```R

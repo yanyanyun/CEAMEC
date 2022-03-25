@@ -1,6 +1,9 @@
 # CEAMEC v1.0
 Cost-Effective Animal Management via Environmental Capacity
 
+Cloud-based shiny app is available at:
+https://qt37t247.shinyapps.io/CEAMEC-master/
+
 ## Demo-videos
 Running in Shiny Cloud:
 https://youtu.be/_wW5g42nHcg

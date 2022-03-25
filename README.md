@@ -11,7 +11,7 @@ https://youtu.be/mg-trms15hI
 ## Installation
 
 ```R
-list.of.packages <- c("shiny","rgdal","leaflet","shinycssloaders","shinythemes","tibble","unmarked","DT","data.table","xlsx","rgenoud")
+list.of.packages <- c("shiny","rgdal","leaflet","shinycssloaders","shinythemes","tibble","unmarked","DT","data.table","xlsx","rgenoud","htmltools","bsplus")
 req.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(req.packages)) install.packages(req.packages, dependencies = TRUE)
 shiny::runGitHub('CEAMEC', 'qt37t247')

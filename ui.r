@@ -12,6 +12,8 @@ library(data.table)
 library(xlsx)
 library(htmltools)
 library(bsplus)
+library(dplyr)
+library(shinycssloaders)
 
 # ui object
 
@@ -617,7 +619,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           
                           h2 ("Cost-Effective Animal Management via Environmental Capacity"),
                           
-                          leafletOutput(outputId = "map"),
+                          leafletOutput(outputId = "map") %>% withSpinner(color="#DD4814"),
                           
                           
                           p(class = "second-p", "Average per hectare in selected cells"),
@@ -627,7 +629,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           
                           verbatimTextOutput("mini", placeholder = TRUE),
                           
-                          textInput("expct", "Density must under____ per ha", "5")%>%
+                          textInput("expct", "Density must under____ per ha", placeholder = "2")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(

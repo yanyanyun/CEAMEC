@@ -103,7 +103,7 @@ must match number of transects. Number of columns should equal to number of cova
                                      
                                      p(class = "first-p", "Modelling with covariates"),
                                      
-                                     textInput("det", "Detection covariates (comma delimited)", "FI, FI+LU", width = "70%")%>%
+                                     textInput("det", "Detection covariates (comma delimited)", placeholder = "FI, FI+LU", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
@@ -111,7 +111,7 @@ must match number of transects. Number of columns should equal to number of cova
                                            )
                                        ),   
                                      
-                                     textInput("state", "Abundance covariates (comma delimited)", "FI+LU, FI+LU+EE+BS+OP+V", width = "70%")%>%
+                                     textInput("state", "Abundance covariates (comma delimited)", placeholder = "FI+LU, FI+LU+EE+BS+OP+V", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
@@ -390,7 +390,7 @@ must match number of transects. Number of columns should equal to number of cova
                           
                           h2 ("Cost-Effective Animal Management via Environmental Capacity"),
                           
-                          textInput("gr", "Growth rate (per month)", "0.02775")%>%
+                          textInput("gr", "Growth rate (per month)", placeholder = "0.02775")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
@@ -398,7 +398,7 @@ must match number of transects. Number of columns should equal to number of cova
                                 )
                             ),
                           
-                          textInput("mth", "Achieve target in____months", "24")%>%
+                          textInput("mth", "Achieve target in____months", placeholder = "24")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
@@ -420,17 +420,17 @@ must match number of transects. Number of columns should equal to number of cova
                           
                           flowLayout(
                             
-                            textInput("le", "Longitude (E)", "104.0364"),   
+                            textInput("le", "Longitude (E)", placeholder = "104.0364"),   
                             
-                            textInput("lw", "Longitude (W)", "103.6051"),
+                            textInput("lw", "Longitude (W)", placeholder = "103.6051"),
                             
-                            textInput("ln", "Latitude (N)", "1.472969"),
+                            textInput("ln", "Latitude (N)", placeholder = "1.472969"),
                             
-                            textInput("ls", "Latitude (S)", "1.219747"),
+                            textInput("ls", "Latitude (S)", placeholder = "1.219747"),
                             
-                            textInput("nrows", "Number of rows", "56"),
+                            textInput("nrows", "Number of rows", placeholder = "56"),
                             
-                            textInput("ncols", "Number of columns", "96")
+                            textInput("ncols", "Number of columns", placeholder = "96")
                             
                           ),
                           
@@ -444,7 +444,7 @@ must match number of transects. Number of columns should equal to number of cova
                           
                           verbatimTextOutput("mini", placeholder = TRUE),
                           
-                          textInput("expct", "Density must under____ per ha", "5")%>%
+                          textInput("expct", "Density must under____ per ha", placeholder = "5")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(

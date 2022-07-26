@@ -34,6 +34,9 @@ shiny::runGitHub('CEAMEC', 'qt37t247')
 
 ## Input data preparation
 
+#During the data and input preparation, always keep in mind that R is case-sensitive (e.g. "AA" is not equals to "aa")!
+
+
 Before using CEAMEC, please prepare the input files according to the structure of R package unmarked:
 
 
@@ -63,8 +66,6 @@ Double observer sampling:
 Example data file provided in CEAMEC Github page: fake_double.csv
 
 https://rdrr.io/cran/unmarked/man/unmarkedFrameMPois.html
-
-During the data and input preparation, always keep in mind that R is case-sensitive (e.g. "AA" is not equals to "aa")!
 
 In addition, CEAMEC requires a cost file listing unit costs of management methods corresponding to covariates to be managed (see example file "cost.csv")  
 

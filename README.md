@@ -64,6 +64,7 @@ Example data file provided in CEAMEC Github page: fake_double.csv
 
 https://rdrr.io/cran/unmarked/man/unmarkedFrameMPois.html
 
+During the data and input preparation, always keep in mind that R is case-sensitive (e.g. "AA" is not equals to "aa")!
 
 In addition, CEAMEC requires a cost file listing unit costs of management methods corresponding to covariates to be managed (see example file "cost.csv")  
 

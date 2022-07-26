@@ -13,6 +13,14 @@ https://youtu.be/mg-trms15hI
 
 ## Installation
 
+Please update your R and RTools (RStudio) to the latest version
+R: https://www.r-project.org/
+RTools: https://cran.r-project.org/bin/windows/Rtools/
+RStudio: https://www.rstudio.com/products/rstudio/download/
+
+It is required to install/update your Java (version > 8)
+https://www.java.com/download
+
 ```R
 list.of.packages <- c("shiny","rgdal","leaflet","shinycssloaders","shinythemes","tibble","unmarked","DT","data.table","xlsx","rgenoud","htmltools","bsplus","dplyr","shinycssloaders","rgeos","plyr")
 req.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]

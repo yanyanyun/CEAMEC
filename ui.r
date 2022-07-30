@@ -14,10 +14,14 @@ library(bsplus)
 library(dplyr)
 library(shinycssloaders)
 library(rgeos)
+library(shinyjs)
 
 # ui object
 
 ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
+                 
+                 useShinyjs(),
+                 
                  theme = shinytheme("united"),
                  
                  
@@ -42,25 +46,27 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      h2 ("Hierarchical distance sampling with unmarked"),
                                      
-                                     p(class = "first-p", "Distance sampling survey information"),
+                                     p(class = "first-p", "Survey information"),
                                      
                                      use_bs_popover(),
                                      
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/distdata.csv", "See an example of survey data file"),
                                      
-                                       
                                        fileInput(
                                          inputId = "distdata",
-                                         label = "Upload distdata (csv file)",
+                                         label = "Upload survey data (csv file)",
                                          accept = c(".csv")
                                        )%>%
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
-                                               content = "A csv format data frame where each row is a detected individual. Must have 2 columns.
-One for distances and the other for transect names.", placement = "right", trigger = "hover"
+                                               content = "A csv format data frame where each row is a detected individual. Must have two columns. One (named “distance”) 
+                                               for distances to the detected individuals and the other (named “transect”) for transect names.", 
+                                               placement = "right", trigger = "hover"
                                              )
                                          ),
                                      
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/covs.csv", "See an example of covariate file"),
                                      
                                      fileInput(
                                        inputId = "covariates",
@@ -70,8 +76,8 @@ One for distances and the other for transect names.", placement = "right", trigg
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. Number of rows
-must match number of transects. Number of columns should equal to number of covariates with one column per covariate. Append an additional column for the lengths of transects (put length as 0 if using point transects)", placement = "right", trigger = "hover"
+                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. Number of rows must match number of transects. Number of columns should equal to number of covariates with one column per covariate. An additional column (named “length”) should be attached as the last column for the length of transects (in the unit of meter, put 0 if using point transects).", 
+                                             placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -85,6 +91,9 @@ must match number of transects. Number of columns should equal to number of cova
                                              content = "Distance data is binned into discrete distance classes with the size of input.", placement = "right", trigger = "hover"
                                            )
                                        ),
+                                     
+                                     br(),
+                                     
                                      verbatimTextOutput("summary_distsamp"),
                                      plotOutput('Hist'),
                                      
@@ -107,17 +116,25 @@ must match number of transects. Number of columns should equal to number of cova
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List all covariates or combinations of covariates to model detection (comma delimited). A combination of covariates is write as covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
                                            )
-                                       ),   
+                                       ),
+                                     
+                                     hidden(h5("Input do not match available covariates' names",
+                                               id = "message_det",
+                                               style = "font-weight:bold;color:red;")),
                                      
                                      textInput("state", "Abundance covariates (comma delimited)", placeholder = "FI+LU, FI+LU+EE+BS+OP+V", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List all covariates or combinations of covariates to model abundance (comma delimited). A combination of covariates is write as covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
                                            )
                                        ),
+                                     
+                                     hidden(h5("Input do not match available covariates' names",
+                                               id = "message_state",
+                                               style = "font-weight:bold;color:red;")),
                                      
                                      selectInput("keyfun", "Detection function", c("halfnorm", "hazard", "uniform", "exp"))%>%
                                        shinyInput_label_embed(
@@ -143,7 +160,7 @@ must match number of transects. Number of columns should equal to number of cova
                                      
                                      uiOutput("bestmodels_distsamp"),
                                      
-                                     textInput("nsims", "Number of bootstrap replicates", placeholder = "25", width = "70%")%>%
+                                     textInput("nsims_distsamp", "Number of bootstrap replicates", placeholder = "25", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
@@ -173,9 +190,13 @@ must match number of transects. Number of columns should equal to number of cova
                                      
                                      h2 ("N-mixture model with unmarked"),
                                      
+                                     p(class = "first-p", "Survey information"),
+                                     
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/mld_pcount.csv", "See an example of survey data file"),
+                                     
                                      fileInput(
                                        inputId = "pcdata",
-                                       label = "Upload repeated count data (csv file)",
+                                       label = "Upload survey data (csv file)",
                                        accept = c(".csv")
                                      )%>%
                                          shinyInput_label_embed(
@@ -186,8 +207,6 @@ must match number of transects. Number of columns should equal to number of cova
                                          ),
                                      
                                      br(),
-                                     
-                                     p(class = "first-p", "Data file composition"),
                                      
                                      uiOutput("countcol"),
                                      
@@ -220,21 +239,29 @@ must match number of transects. Number of columns should equal to number of cova
                                      
                                      p(class = "first-p", "Modelling with covariates"),
                                      
-                                     textInput("det_pc", "Detection covariates (comma delimited)", placeholder = "1,date,ivel+date", width = "70%")%>%
+                                     textInput("det_pc", "Detection covariates (comma delimited)", placeholder = "1, date, ivel+date", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List all covariates or combinations of covariates to model detection (comma delimited). A combination of covariates is write as covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
-                                           )
-                                       ),   
-                                     
-                                     textInput("state_pc", "Abundance covariates (comma delimited)", placeholder = "1,elev,length+forest", width = "70%")%>%
-                                       shinyInput_label_embed(
-                                         shiny_iconlink() %>%
-                                           bs_embed_popover(
-                                             content = "List all covariates or combinations of covariates to model abundance (comma delimited). A combination of covariates is write as covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates (can be either/both observation and site covariates) to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
                                            )
                                        ),
+                                     
+                                     hidden(h5("Input do not match available covariates' names",
+                                               id = "message_det_pc",
+                                               style = "font-weight:bold;color:red;")),
+                                     
+                                     textInput("state_pc", "Abundance covariates (comma delimited)", placeholder = "1, elev, length+forest", width = "70%")%>%
+                                       shinyInput_label_embed(
+                                         shiny_iconlink() %>%
+                                           bs_embed_popover(
+                                             content = "List covariates and combinations of covariates (site covairates only) to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                           )
+                                       ),
+                                     
+                                     hidden(h5("Input do not match available covariates' names (site covariates only)",
+                                               id = "message_state_pc",
+                                               style = "font-weight:bold;color:red;")),
                                      
                                      selectInput("mixture", "Latent abundance distribution", c("Poisson (P)" = "P", "Negative binomial (NB)" = "NB", "Zero-inflated Poisson random variable (ZIP)" = "ZIP"))%>%
                                        shinyInput_label_embed(
@@ -261,7 +288,7 @@ must match number of transects. Number of columns should equal to number of cova
                                      
                                      uiOutput("bestmodels_pcount"),
                                      
-                                     textInput("nsims", "Number of bootstrap replicates to check adequacy of model fit", placeholder = "25", width = "70%")%>%
+                                     textInput("nsims_pcount", "Number of bootstrap replicates to check adequacy of model fit", placeholder = "25", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
@@ -291,6 +318,14 @@ must match number of transects. Number of columns should equal to number of cova
                                      
                                      h2 ("Multinomial-Poisson Mixture model with unmarked"),
                                      
+                                     p(class = "first-p", "Survey information"),
+                                     
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/oven_removal.csv", "See an example of removal sampling survey data file"),
+                                     
+                                     br(),
+                                     
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/fake_double.csv", "See an example of double observer sampling survey data file"),
+                                     
                                      fileInput(
                                        inputId = "mndata",
                                        label = "Upload survey data (csv file)",
@@ -302,8 +337,6 @@ must match number of transects. Number of columns should equal to number of cova
                                                content = "A csv format data frame of the count data with observation and site covariates appended. A transect per row. Columns contains counts (one session per column), observation covariates (one session per column) and site covariates (one covariate per column). Differnt seesions can be identified with '.#' (e.g. '.1','.2','.3') in the column names.", placement = "right", trigger = "hover"
                                              )
                                          ),
-                                     
-                                     p(class = "first-p", "Data file composition"),
                                      
                                      uiOutput("countcolm"),
                                      
@@ -330,17 +363,25 @@ must match number of transects. Number of columns should equal to number of cova
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List all covariates or combinations of covariates to model detection (comma delimited). A combination of covariates is write as covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates (can be either/both observation and site covariates) to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
                                            )
                                        ),
+                                     
+                                     hidden(h5("Input do not match available covariates' names",
+                                               id = "message_det_mn",
+                                               style = "font-weight:bold;color:red;")),
                                      
                                      textInput("state_mn", "Abundance covariates (comma delimited)", placeholder = "1,covA,covB,covA+covB", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List all covariates or combinations of covariates to model abundance (comma delimited). A combination of covariates is write as covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates (site covairates only) to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
                                            )
                                        ),
+                                     
+                                     hidden(h5("Input do not match available covariates' names (site covariates only)",
+                                               id = "message_state_mn",
+                                               style = "font-weight:bold;color:red;")),
                                      
                                      actionButton("ModelCovs_mn", "Start computing models", class = "btn btn-primary"),
                                      
@@ -359,7 +400,7 @@ must match number of transects. Number of columns should equal to number of cova
                                      
                                      uiOutput("bestmodels_mn"),
                                      
-                                     textInput("nsims", "Number of bootstrap replicates to check adequacy of model fit", placeholder = "25", width = "70%")%>%
+                                     textInput("nsims_mn", "Number of bootstrap replicates to check adequacy of model fit", placeholder = "25", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
@@ -390,7 +431,7 @@ must match number of transects. Number of columns should equal to number of cova
                           
                           h2 ("Cost-Effective Animal Management via Environmental Capacity"),
                           
-                          textInput("gr", "Growth rate (per month)", placeholder = "0.02775")%>%
+                          textInput("gr", "Growth rate (per month)", "0.02775")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
@@ -398,13 +439,15 @@ must match number of transects. Number of columns should equal to number of cova
                                 )
                             ),
                           
-                          textInput("mth", "Achieve target in____months", placeholder = "24")%>%
+                          textInput("mth", "Achieve target in____months", "24")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
                                   content = "Length in months for the period of management", placement = "right", trigger = "hover"
                                 )
                             ),
+                          
+                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/newdata.csv", "See an example of newdata file"),
                           
                           fileInput(
                             inputId = "newdata",
@@ -420,22 +463,26 @@ must match number of transects. Number of columns should equal to number of cova
                           
                           flowLayout(
                             
-                            textInput("le", "Longitude (E)", placeholder = "104.0364"),   
+                            textInput("le", "Longitude (E)", "104.0364"),   
                             
-                            textInput("lw", "Longitude (W)", placeholder = "103.6051"),
+                            textInput("lw", "Longitude (W)", "103.6051"),
                             
-                            textInput("ln", "Latitude (N)", placeholder = "1.472969"),
+                            textInput("ln", "Latitude (N)", "1.472969"),
                             
-                            textInput("ls", "Latitude (S)", placeholder = "1.219747"),
+                            textInput("ls", "Latitude (S)", "1.219747"),
                             
-                            textInput("nrows", "Number of rows", placeholder = "56"),
+                            textInput("nrows", "Number of rows", "56"),
                             
-                            textInput("ncols", "Number of columns", placeholder = "96")
+                            textInput("ncols", "Number of columns", "96")
                             
                           ),
                           
                           leafletOutput(outputId = "map") %>% withSpinner(color="#DD4814"),
                           
+                          
+                          br(),
+                          
+                          br(),
                           
                           p(class = "second-p", "Average per hectare in selected cells"),
                           verbatimTextOutput("aver", placeholder = TRUE),
@@ -444,13 +491,19 @@ must match number of transects. Number of columns should equal to number of cova
                           
                           verbatimTextOutput("mini", placeholder = TRUE),
                           
-                          textInput("expct", "Density must under____ per ha", placeholder = "5")%>%
+                          textInput("expct", "Density must under____ per ha", "5")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
                                   content = "Don't set this value lower than the background density (see above). Background density of each cell can be seen with mouse hover over.", placement = "right", trigger = "hover"
                                 )
                             ),
+                          
+                          hidden(h5("Target density too low! Please set a number higher than the background density",
+                                    id = "message_expect",
+                                    style = "font-weight:bold;color:red;")),
+                          
+                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/cost.csv", "See an example of cost file"),
                           
                           fileInput(
                             inputId = "cost",
@@ -461,10 +514,17 @@ must match number of transects. Number of columns should equal to number of cova
                               shinyInput_label_embed(
                                 shiny_iconlink() %>%
                                   bs_embed_popover(
-                                    content = "A csv format data frame with one covariate to be managed per row and one of the four unit costs (a, b, c, d) per column.", placement = "right", trigger = "hover"
+                                    content = "A csv format data frame with one covariate to be managed per row and one of the four unit costs per column (in the order of a, b, c, d).", placement = "right", trigger = "hover"
                                   )
                               ),
                           
+                          hidden(h5("Covariates' names in the file do not match selected covarites to be managed",
+                                    id = "message_costcov",
+                                    style = "font-weight:bold;color:red;")),
+                          
+                          hidden(h5("Non-numeric items in column 2 to 5, please check the input file",
+                                    id = "message_costnum",
+                                    style = "font-weight:bold;color:red;")),
                           
                           actionButton("calculate", "Submit", class = "btn btn-primary"),
                           
@@ -492,6 +552,34 @@ must match number of transects. Number of columns should equal to number of cova
                           br(),
                           br(),
                           br()
-                 )
+                 ),
                  #End Tab "CEAMEC"
+                 
+                 #Tab "Help"
+                 tabPanel("Help",
+                          
+                          a(href="https://youtu.be/mg-trms15hI", "1. I want to watch a video tutorial.", style = "font-size:25px;"),
+                          
+                          br(),
+                          
+                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/User%20Manual.pdf", "2. I want to read the user manual.", style = "font-size:25px;"),
+                          
+                          br(),
+                          
+                          a(href="https://cran.r-project.org/web/packages/unmarked/index.html", "3. I want to know more about hierarchical modelling and unmarked.", style = "font-size:25px;"),
+                          
+                          br(),
+                          
+                          a(href="https://github.com/qt37t247/CEAMEC", "4. I want to report an issue.", style = "font-size:25px;"),
+                          
+                          br(),
+                          
+                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/capacity.r", "5. My analysis is massive, I want script for non-interactive run with high-performance computer.", style = "font-size:25px;"),
+
+                          br()
+                          
+                          
+                 )
+                 #End Tab "Help"
+                 
 )#end UI

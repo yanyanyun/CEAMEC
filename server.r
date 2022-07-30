@@ -130,11 +130,11 @@ server <- function(input, output, session) {
     detect_df <- data.frame(msP@Full$model, msP@Full$nPars, msP@Full$AIC, msP@Full$delta, msP@Full$AICwt, msP@Full$cumltvWt)
     names(detect_df) <- c("model","nPars","AIC","delta","AICwt","cumltvWt")
     removeModal()
-    output$detect_fun<-renderDataTable({
+    output$detect_fun<-renderDT(
       
-      detect_df
+      datatable(detect_df, caption = "Hint: Best detection function is with the lowest AIC") 
       
-    })
+    )
     
   })
   
@@ -152,14 +152,38 @@ server <- function(input, output, session) {
     mixture_df <- data.frame(msPx@Full$model, msPx@Full$nPars, msPx@Full$AIC, msPx@Full$delta, msPx@Full$AICwt, msPx@Full$cumltvWt)
     names(mixture_df) <- c("model","nPars","AIC","delta","AICwt","cumltvWt")
     removeModal()
-    output$mixture_fun<-renderDataTable({
+    output$mixture_fun<-renderDT(
       
-      mixture_df
+      datatable(mixture_df, caption = "Hint: Best model for abundance distribution is with the lowest AIC") 
       
-    })
+    )
     
   })
   
+  observeEvent(input$det, {
+    
+    req(input$covariates, input$det)
+    if(all(unique(unlist(strsplit(gsub("\\+", ",", gsub(" ", "", input$det)), ","))) 
+        %in% append(head(colnames(read.csv(input$covariates$datapath, header=TRUE)), -1), "1"))) {
+      shinyjs::hide("message_det")
+    } else {
+      shinyjs::show("message_det")
+    }
+    
+  })
+  
+  observeEvent(input$state, {
+    
+    req(input$covariates, input$state)
+    
+    if(all(unique(unlist(strsplit(gsub("\\+", ",", gsub(" ", "", input$state)), ","))) 
+           %in% append(head(colnames(read.csv(input$covariates$datapath, header=TRUE)), -1), "1"))) {
+      shinyjs::hide("message_state")
+    } else {
+      shinyjs::show("message_state")
+    }
+    
+  })
   
   makeReactiveBinding("covmodel")
   
@@ -181,11 +205,11 @@ server <- function(input, output, session) {
     names(covmodels_df) <- c("model","nPars","AIC","delta","AICwt","cumltvWt")
     removeModal()
     covmodel <<- covmodels
-    output$covmodels_distsamp<-renderDataTable({
+    output$covmodels_distsamp<-renderDT(
       
-      covmodels_df
+      datatable(covmodels_df, caption = "Hint: Best model is with the lowest AIC") 
       
-    })
+    )
     
   })
   
@@ -194,15 +218,34 @@ server <- function(input, output, session) {
     fitsPC <- fitList(fits=covmodel)
     (msPC<-modSel(fitsPC))
     modelnames <- msPC@Full$model
-    selectInput("best_distsamp", "Select the best model", modelnames)%>%
-      shinyInput_label_embed(
-        shiny_iconlink() %>%
-          bs_embed_popover(
-            content = "You could choose based on the table above (normally the model with lowest AIC)", placement = "right", trigger = "hover"
-          )
-      )
+    selectInput("best_distsamp", "Select the best model", modelnames)
+  })
+
+    
+  observeEvent(input$det_pc, {
+    
+    req(input$sitecol, input$det_pc)
+    if(all(unique(unlist(strsplit(gsub("\\+", ",", gsub(" ", "", input$det_pc)), ","))) 
+           %in% append(append(input$sitecol, sub("\\..", "", input$obscol)), "1"))) {
+      shinyjs::hide("message_det_pc")
+    } else {
+      shinyjs::show("message_det_pc")
+    }
+    
   })
   
+  observeEvent(input$state_pc, {
+    
+    req(input$sitecol, input$state_pc)
+    
+    if(all(unique(unlist(strsplit(gsub("\\+", ",", gsub(" ", "", input$state_pc)), ","))) 
+           %in% append(input$sitecol, "1"))) {
+      shinyjs::hide("message_state_pc")
+    } else {
+      shinyjs::show("message_state_pc")
+    }
+    
+  })  
   
   #repeated count covmodel calculation
   observeEvent(input$ModelCovs_pcount, {
@@ -223,11 +266,11 @@ server <- function(input, output, session) {
     names(covmodels_df) <- c("model","nPars","AIC","delta","AICwt","cumltvWt")
     removeModal()
     covmodel <<- covmodels
-    output$covmodels_pcount<-renderDataTable({
+    output$covmodels_pcount<-renderDT(
       
-      covmodels_df
+      datatable(covmodels_df, caption = "Hint: Best model is with the lowest AIC") 
       
-    })
+    )
     
   })
   
@@ -236,16 +279,36 @@ server <- function(input, output, session) {
     fitsPC <- fitList(fits=covmodel)
     (msPC<-modSel(fitsPC))
     modelnames <- msPC@Full$model
-    selectInput("best_pcount", "Select the best model", modelnames)%>%
-      shinyInput_label_embed(
-        shiny_iconlink() %>%
-          bs_embed_popover(
-            content = "You could choose based on the table above (normally the model with lowest AIC)", placement = "right", trigger = "hover"
-          )
-      )
+    selectInput("best_pcount", "Select the best model", modelnames)
   })  
   
   #multinomial covmodel calculation
+  
+  observeEvent(input$det_mn, {
+    
+    req(input$sitecolm, input$det_mn)
+    if(all(unique(unlist(strsplit(gsub("\\+", ",", gsub(" ", "", input$det_mn)), ","))) 
+           %in% append(append(input$sitecolm, sub("\\..", "", input$obscolm)), "1"))) {
+      shinyjs::hide("message_det_mn")
+    } else {
+      shinyjs::show("message_det_mn")
+    }
+    
+  })
+  
+  observeEvent(input$state_mn, {
+    
+    req(input$sitecolm, input$state_mn)
+    
+    if(all(unique(unlist(strsplit(gsub("\\+", ",", gsub(" ", "", input$state_mn)), ","))) 
+           %in% append(input$sitecolm, "1"))) {
+      shinyjs::hide("message_state_mn")
+    } else {
+      shinyjs::show("message_state_mn")
+    }
+    
+  })  
+  
   observeEvent(input$ModelCovs_mn, {
     
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
@@ -265,11 +328,11 @@ server <- function(input, output, session) {
     names(covmodels_df) <- c("model","nPars","AIC","delta","AICwt","cumltvWt")
     removeModal()
     covmodel <<- covmodels
-    output$covmodels_mn<-renderDataTable({
+    output$covmodels_mn<-renderDT(
       
-      covmodels_df
+      datatable(covmodels_df, caption = "Hint: Best model is with the lowest AIC") 
       
-    })
+    )
     
   })
   
@@ -278,17 +341,13 @@ server <- function(input, output, session) {
     fitsPC <- fitList(fits=covmodel)
     (msPC<-modSel(fitsPC))
     modelnames <- msPC@Full$model
-    selectInput("best_mn", "Select the best model", modelnames)%>%
-      shinyInput_label_embed(
-        shiny_iconlink() %>%
-          bs_embed_popover(
-            content = "You could choose based on the table above (normally the model with lowest AIC)", placement = "right", trigger = "hover"
-          )
-      )
+    selectInput("best_mn", "Select the best model", modelnames)
   })
   
   #model re-fit with parametric bootstraps (distance sampling)
   observeEvent(input$Parboot_distsamp, {
+    
+    req(input$best_distsamp, input$nsims_distsamp)
     
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     
@@ -315,7 +374,7 @@ server <- function(input, output, session) {
     } else {
       xxx <- distsamp(formula, umf, keyfun = "uniform", output = "density", unitsOut = "ha")
     }
-    pb <- parboot(xxx, fitstats, nsim=as.numeric(input$nsims))
+    pb <- parboot(xxx, fitstats, nsim=as.integer(input$nsims_distsamp))
     t.star <- pb@t.star
     t0 <- pb@t0
     nsim <- nrow(t.star)
@@ -333,16 +392,18 @@ server <- function(input, output, session) {
     
     removeModal()
     
-    output$parboot_distsamp<-renderDataTable({
+    output$parboot_distsamp<-renderDT(
       
-      stats
+      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when “Pr(t_B>t0)” is greater than 0.05") 
       
-    })
+    )
     
   })
 
   #model re-fit with parametric bootstraps (repeat count)
   observeEvent(input$Parboot_pcount, {
+    
+    req(input$best_pcount, is.integer(input$nsims_pcount))
     
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     
@@ -368,7 +429,7 @@ server <- function(input, output, session) {
     } else {
       xxx <- pcount(formula, umf, mixture = "ZIP")
     }
-    pb <- parboot(xxx, fitstats, nsim=as.numeric(input$nsims))
+    pb <- parboot(xxx, fitstats, nsim=as.integer(input$nsims_pcount))
     t.star <- pb@t.star
     t0 <- pb@t0
     nsim <- nrow(t.star)
@@ -386,11 +447,11 @@ server <- function(input, output, session) {
     
     removeModal()
     
-    output$parboot_pcount<-renderDataTable({
+    output$parboot_pcount<-renderDT(
       
-      stats
+      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when “Pr(t_B>t0)” is greater than 0.05") 
       
-    })
+    )
     
   })
   
@@ -398,6 +459,8 @@ server <- function(input, output, session) {
   observeEvent(input$Parboot_mn, {
     
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
+    
+    req(input$best_mn, is.integer(input$nsims_mn))
     
     ##parboot function from unmarked
     fitstats <- function(fm) {
@@ -414,7 +477,7 @@ server <- function(input, output, session) {
     formula <- covmodel[[input$best_mn]]@formula
     umf <- mnd()
     xxx <- multinomPois(formula, umf)
-    pb <- parboot(xxx, fitstats, nsim=as.numeric(input$nsims))
+    pb <- parboot(xxx, fitstats, nsim=as.integer(input$nsims_mn))
     t.star <- pb@t.star
     t0 <- pb@t0
     nsim <- nrow(t.star)
@@ -432,11 +495,11 @@ server <- function(input, output, session) {
     
     removeModal()
     
-    output$parboot_mn<-renderDataTable({
+    output$parboot_mn<-renderDT(
       
-      stats
+      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when “Pr(t_B>t0)” is greater than 0.05") 
       
-    })
+    )
     
   })
   
@@ -457,6 +520,17 @@ server <- function(input, output, session) {
   })
   
   #Density estimation
+  
+  observeEvent(input$expect, {
+    
+    req(input$expect)
+    if(as.numeric(input$expect) >= as.numeric(output$mini)) {
+      shinyjs::hide("message_expect")
+    } else {
+      shinyjs::show("message_expect")
+    }
+    
+  })
   
   rsp_F <- reactive({
     req(input$newdata, input$gr, input$mth, input$le, input$lw, input$ln, input$ls, input$nrows, input$ncols)
@@ -489,6 +563,8 @@ server <- function(input, output, session) {
   costi <- reactive({
     req(input$cost)
     costs <- read.csv(input$cost$datapath, header=TRUE)
+    costs <- costs[,1:5]
+    costs[is.na(costs)] = 0
     if (is.null(input$best_distsamp) == FALSE) {best <- input$best_distsamp} else 
       if (is.null(input$best_pcount) == FALSE) {best <- input$best_pcount} else
       {best <- input$best_mn}
@@ -498,6 +574,31 @@ server <- function(input, output, session) {
     coeffs <- cbind(name_coeffs, coeffs)
     names(coeffs) <- c("X", "coefficient")
     merge(coeffs, costs, by.X = "X", by.y = "X")
+  })
+  
+  observeEvent(input$cost, {
+    
+    req(input$cost)
+    if (is.null(input$mcovs_distsamp) == FALSE) {mcovs <- input$mcovs_distsamp} else 
+      if (is.null(input$mcovs_pcount) == FALSE) {mcovs <- input$mcovs_pcount} else
+      {mcovs <- input$mcovs_mn}
+    if(setequal(read.csv(input$cost$datapath, header=TRUE)[,1], mcovs)) {
+      shinyjs::hide("message_costcov")
+    } else {
+      shinyjs::show("message_costcov")
+    }
+    
+  })
+  
+  observeEvent(input$cost, {
+    
+    req(input$cost)
+    if(is.numeric(unlist(read.csv(input$cost$datapath, header=TRUE)[,-1]))) {
+      shinyjs::hide("message_costnum")
+    } else {
+      shinyjs::show("message_costnum")
+    }
+    
   })
   
   binpal <- colorBin("Reds", c(0:14), 9, pretty = FALSE)

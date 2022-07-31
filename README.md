@@ -21,6 +21,8 @@ It is required to install/update your Java (version > 8)
 
 https://www.java.com/download
 
+### Please copy the code below to your R console to install and run CEAMEC.
+
 ```R
 list.of.packages <- c("shiny","rgdal","leaflet","shinycssloaders","shinythemes","tibble","unmarked","DT","data.table","xlsx","rgenoud","htmltools","bsplus","dplyr","shinycssloaders","rgeos","plyr","shinyjs")
 req.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]

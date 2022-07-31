@@ -29,11 +29,7 @@ https://youtu.be/mg-trms15hI
 
 ## Input data preparation
 
-### During the data and input preparation, always keep in mind that R is case-sensitive (e.g. "AA" is not equals to "aa")!
-
-
 Before using CEAMEC, please prepare the input files according to the structure of R package unmarked:
-
 
 Distance sampling:
 Example data file provided in CEAMEC Github page: distdata.csv and cov.csv

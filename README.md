@@ -19,10 +19,6 @@ if(length(req.packages)) install.packages(req.packages, dependencies = TRUE)
 shiny::runGitHub('CEAMEC', 'qt37t247')
 ```
 
-
-Cloud-based shiny app is available at:
-https://qt37t247.shinyapps.io/CEAMEC-master/
-
 ## Video tutorial
 https://youtu.be/mg-trms15hI
 

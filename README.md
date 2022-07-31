@@ -1,11 +1,6 @@
 # CEAMEC v1.0
+
 Cost-Effective Animal Management via Environmental Capacity
-
-Cloud-based shiny app is available at:
-https://qt37t247.shinyapps.io/CEAMEC-master/
-
-## Video tutorial
-https://youtu.be/mg-trms15hI
 
 ## Installation
 
@@ -29,6 +24,14 @@ req.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"
 if(length(req.packages)) install.packages(req.packages, dependencies = TRUE)
 shiny::runGitHub('CEAMEC', 'qt37t247')
 ```
+
+
+Cloud-based shiny app is available at:
+https://qt37t247.shinyapps.io/CEAMEC-master/
+
+## Video tutorial
+https://youtu.be/mg-trms15hI
+
 
 ## Input data preparation
 

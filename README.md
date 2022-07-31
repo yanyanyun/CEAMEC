@@ -39,7 +39,5 @@ Removal sampling: https://rdrr.io/cran/unmarked/man/ovendata.html
 
 Double observer sampling: https://rdrr.io/cran/unmarked/man/unmarkedFrameMPois.html
 
-In addition, CEAMEC requires a cost file listing unit costs of management methods corresponding to covariates to be managed (see example file "cost.csv")  
-
 ## Contact author
 Dr. Qian Tang    <<tangbenjamin@hotmail.com>>

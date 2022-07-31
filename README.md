@@ -33,26 +33,11 @@ Please prepare the input files according to the structure of R package unmarked 
 
 Distance sampling: https://cran.r-project.org/web/packages/unmarked/vignettes/distsamp.html
 
-Example data file provided in CEAMEC Github page: distdata.csv and cov.csv
-
-
-
 Repeated count: https://studylib.net/doc/6696451/fitting-royle-s-n-mixture-model-with-package-unmarked-in-...
-
-Example data file provided in CEAMEC Github page: mld_pcount.csv
-
-
 
 Removal sampling: https://rdrr.io/cran/unmarked/man/ovendata.html
 
-Example data file provided in CEAMEC Github page: oven_removal.csv
-
-
-
 Double observer sampling: https://rdrr.io/cran/unmarked/man/unmarkedFrameMPois.html
-
-Example data file provided in CEAMEC Github page: fake_double.csv
-
 
 In addition, CEAMEC requires a cost file listing unit costs of management methods corresponding to covariates to be managed (see example file "cost.csv")  
 

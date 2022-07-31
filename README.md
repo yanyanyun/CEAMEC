@@ -57,5 +57,5 @@ Example data file provided in CEAMEC Github page: fake_double.csv
 In addition, CEAMEC requires a cost file listing unit costs of management methods corresponding to covariates to be managed (see example file "cost.csv")  
 
 ## Contact author
-
+Dr. Qian Tang
 tangqiannus@gmail.com

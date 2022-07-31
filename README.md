@@ -1,6 +1,6 @@
 # CEAMEC v1.0
 
-Cost-Effective Animal Management via Environmental Capacity
+CEAMEC: Cost-Effective Animal Management via Environmental Capacity
 
 ## Installation
 
@@ -16,7 +16,7 @@ It is required to install/update your Java (version > 8)
 
 https://www.java.com/download
 
-### Please copy the code below to your R console to install and run CEAMEC.
+### Install and run CEAMEC by copying the code below to your R console.
 
 ```R
 list.of.packages <- c("shiny","rgdal","leaflet","shinycssloaders","shinythemes","tibble","unmarked","DT","data.table","xlsx","rgenoud","htmltools","bsplus","dplyr","shinycssloaders","rgeos","plyr","shinyjs")

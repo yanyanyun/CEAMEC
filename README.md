@@ -4,11 +4,11 @@ CEAMEC: Cost-Effective Animal Management via Environmental Capacity
 
 ## Installation
 
-Please use the latest R: https://www.r-project.org/  
+* Please use the latest R: https://www.r-project.org/  
 
-Please use the latest RTools: https://cran.r-project.org/bin/windows/Rtools/
+* Please use the latest RTools: https://cran.r-project.org/bin/windows/Rtools/
 
-Please use the latest Java (version > 8): https://www.java.com/download
+* Please use the latest Java (version > 8): https://www.java.com/download
 
 ### Install and run CEAMEC by copying the code below to your R console.
 
@@ -31,13 +31,13 @@ https://youtu.be/mg-trms15hI
 
 Please prepare the input files according to the structure of R package unmarked based on survey types:
 
-Distance sampling: https://cran.r-project.org/web/packages/unmarked/vignettes/distsamp.html
+* Distance sampling: https://cran.r-project.org/web/packages/unmarked/vignettes/distsamp.html
 
-Repeated count: https://studylib.net/doc/6696451/fitting-royle-s-n-mixture-model-with-package-unmarked-in-...
+* Repeated count: https://studylib.net/doc/6696451/fitting-royle-s-n-mixture-model-with-package-unmarked-in-...
 
-Removal sampling: https://rdrr.io/cran/unmarked/man/ovendata.html
+* Removal sampling: https://rdrr.io/cran/unmarked/man/ovendata.html
 
-Double observer sampling: https://rdrr.io/cran/unmarked/man/unmarkedFrameMPois.html
+* Double observer sampling: https://rdrr.io/cran/unmarked/man/unmarkedFrameMPois.html
 
 ## Contact author
 Dr. Qian Tang    <<tangbenjamin@hotmail.com>>

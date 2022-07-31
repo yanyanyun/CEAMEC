@@ -4,9 +4,11 @@ CEAMEC: Cost-Effective Animal Management via Environmental Capacity
 
 ## Installation
 
-Please update your R and RTools to the latest version. R: https://www.r-project.org/  RTools: https://cran.r-project.org/bin/windows/Rtools/
+Please use the latest R: https://www.r-project.org/  
 
-It is required to install/update your Java (version > 8): https://www.java.com/download
+Please use the latest RTools: https://cran.r-project.org/bin/windows/Rtools/
+
+Please use the latest Java (version > 8): https://www.java.com/download
 
 ### Install and run CEAMEC by copying the code below to your R console.
 

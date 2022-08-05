@@ -117,7 +117,7 @@ server <- function(input, output, session) {
   })
   
   observeEvent(input$detect, {
-    
+    req(input$distdata, input$covariates, input$binsize)
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     umf <- distd()
     detect_fun<-list()
@@ -189,7 +189,7 @@ server <- function(input, output, session) {
   
   #distance sampling covmodel calculation
   observeEvent(input$ModelCovs_distsamp, {
-    
+    req(input$det, input$state, input$keyfun)
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     umf <- distd()
     covmodels<-list()
@@ -249,7 +249,7 @@ server <- function(input, output, session) {
   
   #repeated count covmodel calculation
   observeEvent(input$ModelCovs_pcount, {
-    
+    req(input$det_pc, input$state_pc, input$mixture)
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     umf <- pcountd()
     covmodels<-list()
@@ -310,7 +310,7 @@ server <- function(input, output, session) {
   })  
   
   observeEvent(input$ModelCovs_mn, {
-    
+    req(input$det_mn, input$state_mn)
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     umf <- mnd()
     
@@ -505,18 +505,35 @@ server <- function(input, output, session) {
   
   output$Managerables_distsamp <- renderUI({
     req(input$covariates)
-    covnames <- head(colnames(read.csv(input$covariates$datapath, header=TRUE)), -1)
-    checkboxGroupInput("mcovs_distsamp", "Select covariates to be managed", covnames, inline = TRUE)
+    covnames_distsamp <- head(colnames(select_if(read.csv(input$covariates$datapath, header=TRUE), is.numeric)), -1)
+    checkboxGroupInput("mcovs_distsamp", "Select covariates to be managed", covnames_distsamp, inline = TRUE)
   })
   
   output$Managerables_pcount <- renderUI({
     req(input$sitecol)
-    checkboxGroupInput("mcovs_pcount", "Select covariates to be managed", input$sitecol, inline = TRUE)
+    covnames_pcount <- colnames(select_if(read.csv(input$pcdata$datapath, header=TRUE)[, input$sitecol], is.numeric))
+    checkboxGroupInput("mcovs_pcount", "Select covariates to be managed", covnames_pcount, inline = TRUE)
   })
   
   output$Managerables_mn <- renderUI({
     req(input$sitecolm)
-    checkboxGroupInput("mcovs_mn", "Select covariates to be managed", input$sitecolm, inline = TRUE)
+    covnames_mn <- colnames(select_if(read.csv(input$mndata$datapath, header=TRUE)[, input$sitecolm], is.numeric))
+    checkboxGroupInput("mcovs_mn", "Select covariates to be managed", covnames_mn, inline = TRUE)
+  })
+  
+  output$continue_distsamp <- renderUI({
+    req(input$mcovs_distsamp, input$best_distsamp)
+    p("Looks good. You may switch to the <CEAMEC> tab")
+  })
+  
+  output$continue_pcount <- renderUI({
+    req(input$mcovs_pcount, input$best_pcount)
+    p("Looks good. You may switch to the <CEAMEC> tab")
+  })
+  
+  output$continue_mn <- renderUI({
+    req(input$mcovs_mn, input$best_mn)
+    p("Looks good. You may switch to the <CEAMEC> tab")
   })
   
   #Density estimation
@@ -601,6 +618,11 @@ server <- function(input, output, session) {
     
   })
   
+  output$clickmap <- renderUI({
+    req(input$newdata, input$nrows, input$ncols)
+    p("Click to select/unselect cells for management units to be tested.")
+  }) 
+
   binpal <- colorBin("Reds", c(0:14), 9, pretty = FALSE)
   
   output$map <- renderLeaflet({  
@@ -632,8 +654,6 @@ server <- function(input, output, session) {
   }) #END RENDER LEAFLET
   
   clickedIds <- reactiveValues(ids = vector())
-  
-  
   
   makeReactiveBinding("clickedPoly")
   

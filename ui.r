@@ -42,7 +42,8 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                     font-size: 14px;
                     font-weight: bold;
                                  }"),
-                                     
+                                     br(),
+                                     br(),
                                      
                                      h2 ("Hierarchical distance sampling with unmarked"),
                                      
@@ -50,7 +51,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      use_bs_popover(),
                                      
-                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/distdata.csv", "See an example of survey data file"),
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/distdata.csv", "See an example of survey data file", style = "color: blue;"),
                                      
                                        fileInput(
                                          inputId = "distdata",
@@ -66,7 +67,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                              )
                                          ),
                                      
-                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/covs.csv", "See an example of covariate file"),
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/covs.csv", "See an example of covariate file", style = "color: blue;"),
                                      
                                      fileInput(
                                        inputId = "covariates",
@@ -82,7 +83,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        ),
                                      
                                         
-                                       selectInput("surveydist", "Type of transects", c("point", "line")),
+                                       selectInput("surveydist", "Type of transects", c("", "point", "line"), selected = NULL),
                                     
                                      textInput("binsize", "Size of bin in meters", placeholder = "10", width = "70%")%>%
                                        shinyInput_label_embed(
@@ -136,7 +137,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                                id = "message_state",
                                                style = "font-weight:bold;color:red;")),
                                      
-                                     selectInput("keyfun", "Detection function", c("halfnorm", "hazard", "uniform", "exp"))%>%
+                                     selectInput("keyfun", "Detection function", c("","halfnorm", "hazard", "uniform", "exp"), selected = NULL)%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
@@ -181,6 +182,8 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      uiOutput("Managerables_distsamp"),
                                      
+                                     uiOutput("continue_distsamp"),
+                                     
                                      br()
                             ),#End Tab "Distance sampling"
                             
@@ -188,11 +191,14 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                             
                             tabPanel("Repeated count",
                                      
+                                     br(),
+                                     br(),
+                                     
                                      h2 ("N-mixture model with unmarked"),
                                      
                                      p(class = "first-p", "Survey information"),
                                      
-                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/mld_pcount.csv", "See an example of survey data file"),
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/mld_pcount.csv", "See an example of survey data file", style = "color: blue;"),
                                      
                                      fileInput(
                                        inputId = "pcdata",
@@ -263,7 +269,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                                id = "message_state_pc",
                                                style = "font-weight:bold;color:red;")),
                                      
-                                     selectInput("mixture", "Latent abundance distribution", c("Poisson (P)" = "P", "Negative binomial (NB)" = "NB", "Zero-inflated Poisson random variable (ZIP)" = "ZIP"))%>%
+                                     selectInput("mixture", "Latent abundance distribution", c("", "Poisson (P)" = "P", "Negative binomial (NB)" = "NB", "Zero-inflated Poisson random variable (ZIP)" = "ZIP"), selected = NULL)%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
@@ -308,6 +314,9 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      br(),
                                      
                                      uiOutput("Managerables_pcount"),
+                                     
+                                     uiOutput("continue_pcount"),
+                                     
                                      br()
                             ),
                             #End Tab "Repeated count"
@@ -316,15 +325,18 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                             
                             tabPanel("Removal sampling or double observer sampling",
                                      
+                                     br(),
+                                     br(),
+                                     
                                      h2 ("Multinomial-Poisson Mixture model with unmarked"),
                                      
                                      p(class = "first-p", "Survey information"),
                                      
-                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/oven_removal.csv", "See an example of removal sampling survey data file"),
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/oven_removal.csv", "See an example of removal sampling survey data file", style = "color: blue;"),
                                      
                                      br(),
                                      
-                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/fake_double.csv", "See an example of double observer sampling survey data file"),
+                                     a(href="https://github.com/qt37t247/CEAMEC/blob/master/fake_double.csv", "See an example of double observer sampling survey data file", style = "color: blue;"),
                                      
                                      fileInput(
                                        inputId = "mndata",
@@ -344,7 +356,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      uiOutput("obscolm"),
                                      
-                                       selectInput("mntype", "Survey type", c("Removal sampling" = "removal", "Standard double observer sampling" = "double", "Dependent double observer sampling" = "depDouble")),
+                                       selectInput("mntype", "Survey type", c("", "Removal sampling" = "removal", "Standard double observer sampling" = "double", "Dependent double observer sampling" = "depDouble"), selected = NULL),
                                        
                                        textInput("area_mn", "Area of each survey site in hectare", placeholder = "1")%>%
                                          shinyInput_label_embed(
@@ -420,6 +432,9 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      br(),
                                      
                                      uiOutput("Managerables_mn"),
+                                     
+                                     uiOutput("continue_mn"),
+                                     
                                      br()
                             )
                  ),
@@ -428,6 +443,9 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                  
                  #Tab "CEAMEC"
                  tabPanel("CEAMEC",
+                          
+                          br(),
+                          br(),
                           
                           h2 ("Cost-Effective Animal Management via Environmental Capacity"),
                           
@@ -447,7 +465,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                 )
                             ),
                           
-                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/newdata.csv", "See an example of newdata file"),
+                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/newdata.csv", "See an example of newdata file", style = "color: blue;"),
                           
                           fileInput(
                             inputId = "newdata",
@@ -477,8 +495,9 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                             
                           ),
                           
-                          leafletOutput(outputId = "map") %>% withSpinner(color="#DD4814"),
+                          uiOutput("clickmap"),
                           
+                          leafletOutput(outputId = "map") %>% withSpinner(color="#DD4814"),
                           
                           br(),
                           
@@ -503,7 +522,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                     id = "message_expect",
                                     style = "font-weight:bold;color:red;")),
                           
-                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/cost.csv", "See an example of cost file"),
+                          a(href="https://github.com/qt37t247/CEAMEC/blob/master/cost.csv", "See an example of cost file", style = "color: blue;"),
                           
                           fileInput(
                             inputId = "cost",
@@ -558,6 +577,10 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                  #Tab "Help"
                  tabPanel("Help",
                           
+                          br(),
+                          br(),
+                          br(),
+                          
                           a(href="https://youtu.be/mg-trms15hI", "1. I want to watch a video tutorial.", style = "font-size:25px;"),
                           
                           br(),
@@ -579,7 +602,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           br()
                           
                           
-                 )
+                 ),
                  #End Tab "Help"
-                 
+    position = c("fixed-top")             
 )#end UI

@@ -61,8 +61,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
-                                               content = "A csv format data frame where each row is a detected individual. Must have two columns. One (named “distance”) 
-                                               for distances to the detected individuals and the other (named “transect”) for transect names.", 
+                                               content = "A csv format data frame where each row is a detected individual. It must have two columns. One (named “distance”) for distances to the detected individuals and the other (named “transect”) for transect names.", 
                                                placement = "right", trigger = "hover"
                                              )
                                          ),
@@ -77,7 +76,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. Number of rows must match number of transects. Number of columns should equal to number of covariates with one column per covariate. An additional column (named “length”) should be attached as the last column for the length of transects (in the unit of meter, put 0 if using point transects).", 
+                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. The number of rows must match the number of transects. The number of columns should equal to the number of covariates with one column per covariate. An additional column (named “length”) should be attached as the last column for the length of transects (in the unit of meter, put 0 if using point transects).", 
                                              placement = "right", trigger = "hover"
                                            )
                                        ),
@@ -89,7 +88,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "Distance data is binned into discrete distance classes with the size of input.", placement = "right", trigger = "hover"
+                                             content = "Distance data is binned into discrete distance classes with the size provided.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -117,7 +116,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List covariates and combinations of covariates to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider a non-interactive run if many combinations are tested, otherwise, very time-consuming.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -129,7 +128,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List covariates and combinations of covariates to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider a non-interactive run if many combinations are tested, otherwise, very time-consuming.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -141,7 +140,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "You could choose based on the table above if you ran check detection functions (normally the detection function with lowest AIC)", placement = "right", trigger = "hover"
+                                             content = "You could choose based on the table above if you ran check detection functions (normally the one with the lowest AIC)", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -161,11 +160,11 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      uiOutput("bestmodels_distsamp"),
                                      
-                                     textInput("nsims_distsamp", "Number of bootstrap replicates", placeholder = "25", width = "70%")%>%
+                                     textInput("nsims_distsamp", "Number of replicates for parametric bootstrapping", placeholder = "25", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "Number of bootstrap replicates to check adequacy of model fit. Can be time consuming (>1 hour) if a large number (>100) is chosen.", placement = "right", trigger = "hover"
+                                             content = "Number of bootstrap replicates (must be an integer) to check the adequacy of model fit. It can be time-consuming (>1 hour) if a large number (>100) is chosen.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -208,7 +207,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
-                                               content = "A csv format data frame of the repeated count data with observation and site covariates appended. A transect per row. Columns contains counts (one session per column), observation covariates (one session per column) and site covariates (one covariate per column). Differnt seesions can be identified with '.#' (e.g. '.1','.2','.3') in the column names.", placement = "right", trigger = "hover"
+                                               content = "A csv format data frame of the repeated count data with observation and site covariates appended. A transect per row. Columns contain counts (one session per column), observation covariates (one session per column) and site covariates (one covariate per column). Different sessions can be identified with '.#' (e.g. '.1','.2','.3') in the column names.", placement = "right", trigger = "hover"
                                              )
                                          ),
                                      
@@ -220,11 +219,11 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      uiOutput("obscol"),
                                      
-                                     textInput("area_pcount", "Area of each survey site in hectare", placeholder = "1")%>%
+                                     textInput("area_pcount", "Area of each survey site in hectares", placeholder = "1")%>%
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
-                                               content = "Normally to be the size of the transect. But if using traps, you may need to estimate the area that the trap may cover", placement = "right", trigger = "hover"
+                                               content = "Normally to be the size of the transect. But if using traps, you may need to estimate the area the trap may cover", placement = "right", trigger = "hover"
                                              )
                                          ),
                                      
@@ -249,7 +248,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List covariates and combinations of covariates (can be either/both observation and site covariates) to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates (can be either/both observation and site covariates) to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider a non-interactive run if many combinations are tested, otherwise, very time-consuming.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -261,7 +260,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List covariates and combinations of covariates (site covairates only) to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates (site covariates only) to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider a non-interactive run if many combinations are tested, otherwise, very time-consuming.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -273,7 +272,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "You could choose based on the table above if you ran check abundance distribution (normally the mixture with lowest AIC)", placement = "right", trigger = "hover"
+                                             content = "You could choose based on the table above if you ran check abundance distribution (normally the one with the lowest AIC)", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -294,11 +293,11 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      uiOutput("bestmodels_pcount"),
                                      
-                                     textInput("nsims_pcount", "Number of bootstrap replicates to check adequacy of model fit", placeholder = "25", width = "70%")%>%
+                                     textInput("nsims_pcount", "Number of replicates for parametric bootstrapping", placeholder = "25", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "Number of bootstrap replicates to check adequacy of model fit. Can be time consuming (>1 hour) if a large number (>100) is chosen.", placement = "right", trigger = "hover"
+                                             content = "Number of bootstrap replicates (must be an integer) to check the adequacy of model fit. It can be time-consuming (>1 hour) if a large number (>100) is chosen.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -346,7 +345,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
-                                               content = "A csv format data frame of the count data with observation and site covariates appended. A transect per row. Columns contains counts (one session per column), observation covariates (one session per column) and site covariates (one covariate per column). Differnt seesions can be identified with '.#' (e.g. '.1','.2','.3') in the column names.", placement = "right", trigger = "hover"
+                                               content = "A csv format data frame of the count data with observation and site covariates appended. A transect per row. Columns contain counts (one session per column), observation covariates (one session per column) and site covariates (one covariate per column). Different sessions can be identified with '.#' (e.g. '.1','.2','.3') in the column names.", placement = "right", trigger = "hover"
                                              )
                                          ),
                                      
@@ -358,7 +357,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                        selectInput("mntype", "Survey type", c("", "Removal sampling" = "removal", "Standard double observer sampling" = "double", "Dependent double observer sampling" = "depDouble"), selected = NULL),
                                        
-                                       textInput("area_mn", "Area of each survey site in hectare", placeholder = "1")%>%
+                                       textInput("area_mn", "Area of each survey site in hectares", placeholder = "1")%>%
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
@@ -375,7 +374,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List covariates and combinations of covariates (can be either/both observation and site covariates) to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates (can be either/both observation and site covariates) to model detection (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider a non-interactive run if many combinations are tested, otherwise, very time-consuming.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -387,7 +386,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "List covariates and combinations of covariates (site covairates only) to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider non-interactive run if many combinations are tested, otherwise very time-consumming.", placement = "right", trigger = "hover"
+                                             content = "List covariates and combinations of covariates (site covairates only) to model abundance (comma delimited). A combination of covariates is written as the names of covariates connected with '+'. Consider a non-interactive run if many combinations are tested, otherwise, very time-consuming.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -412,11 +411,11 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                      
                                      uiOutput("bestmodels_mn"),
                                      
-                                     textInput("nsims_mn", "Number of bootstrap replicates to check adequacy of model fit", placeholder = "25", width = "70%")%>%
+                                     textInput("nsims_mn", "Number of replicates for parametric bootstrapping", placeholder = "25", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "Number of bootstrap replicates to check adequacy of model fit. Can be time consuming (>1 hour) if a large number (>100) is chosen.", placement = "right", trigger = "hover"
+                                             content = "Number of bootstrap replicates (must be an integer) to check the adequacy of model fit. It can be time-consuming (>1 hour) if a large number (>100) is chosen.", placement = "right", trigger = "hover"
                                            )
                                        ),
                                      
@@ -453,7 +452,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
-                                  content = "Growth rate can be estimated from reproductive experiments or field observations. If using anual growth rate please divide by 12.", placement = "right", trigger = "hover"
+                                  content = "The growth rate can be estimated from reproductive experiments or field observations. If using the annual growth rate, please divide by 12.", placement = "right", trigger = "hover"
                                 )
                             ),
                           
@@ -475,7 +474,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
-                                  content = "A csv format data frame containing environmental variable of rasterized area of study. Each row represents each cell in the rasterized study area with cell ID indicated at the first column. All determinant covariates should be included with one covariate per column starting from the second column.", placement = "right", trigger = "hover"
+                                  content = "A csv format data frame containing environmental variable of the rasterized area of study. Each row represents each cell in the rasterized study area with the cell ID indicated in the first column. All determinant covariates should be included with one covariate per column starting from the second column.", placement = "right", trigger = "hover"
                                 )
                             ),   
                           
@@ -510,7 +509,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           
                           verbatimTextOutput("mini", placeholder = TRUE),
                           
-                          textInput("expct", "Density must under____ per ha", "5")%>%
+                          textInput("expct", "Density must be under____ per ha", "5")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(

@@ -394,7 +394,7 @@ server <- function(input, output, session) {
     
     output$parboot_distsamp<-renderDT(
       
-      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when “Pr(t_B>t0)” is greater than 0.05") 
+      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when âPr(t_B>t0)â is greater than 0.05") 
       
     )
     
@@ -449,7 +449,7 @@ server <- function(input, output, session) {
     
     output$parboot_pcount<-renderDT(
       
-      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when “Pr(t_B>t0)” is greater than 0.05") 
+      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when âPr(t_B>t0)â is greater than 0.05") 
       
     )
     
@@ -497,7 +497,7 @@ server <- function(input, output, session) {
     
     output$parboot_mn<-renderDT(
       
-      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when “Pr(t_B>t0)” is greater than 0.05") 
+      datatable(stats, caption = "Hint: t0 = Original statistic computed from data; t_B = Vector of bootstrap samples. Model is considered adequately fit when âPr(t_B>t0)â is greater than 0.05") 
       
     )
     

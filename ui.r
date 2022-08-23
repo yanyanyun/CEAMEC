@@ -61,7 +61,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
-                                               content = "A csv format data frame where each row is a detected individual. It must have two columns. One (named “distance”) for distances to the detected individuals and the other (named “transect”) for transect names.", 
+                                               content = "A csv format data frame where each row is a detected individual. It must have two columns. One (named âdistanceâ) for distances to the detected individuals and the other (named âtransectâ) for transect names.", 
                                                placement = "right", trigger = "hover"
                                              )
                                          ),
@@ -76,7 +76,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. The number of rows must match the number of transects. The number of columns should equal to the number of covariates with one column per covariate. An additional column (named “length”) should be attached as the last column for the length of transects (in the unit of meter, put 0 if using point transects).", 
+                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. The number of rows must match the number of transects. The number of columns should equal to the number of covariates with one column per covariate. An additional column (named âlengthâ) should be attached as the last column for the length of transects (in the unit of meter, put 0 if using point transects).", 
                                              placement = "right", trigger = "hover"
                                            )
                                        ),
@@ -120,7 +120,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                            )
                                        ),
                                      
-                                     hidden(h5("Input do not match available covariates' names",
+                                     hidden(h5("Error: input does not match available covariates' names",
                                                id = "message_det",
                                                style = "font-weight:bold;color:red;")),
                                      
@@ -132,7 +132,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                            )
                                        ),
                                      
-                                     hidden(h5("Input do not match available covariates' names",
+                                     hidden(h5("Error: input does not match available covariates' names",
                                                id = "message_state",
                                                style = "font-weight:bold;color:red;")),
                                      
@@ -252,7 +252,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                            )
                                        ),
                                      
-                                     hidden(h5("Input do not match available covariates' names",
+                                     hidden(h5("Error: input does not match available covariates' names",
                                                id = "message_det_pc",
                                                style = "font-weight:bold;color:red;")),
                                      
@@ -264,7 +264,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                            )
                                        ),
                                      
-                                     hidden(h5("Input do not match available covariates' names (site covariates only)",
+                                     hidden(h5("Error: input does not match available covariates' names (site covariates only)",
                                                id = "message_state_pc",
                                                style = "font-weight:bold;color:red;")),
                                      
@@ -378,7 +378,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                            )
                                        ),
                                      
-                                     hidden(h5("Input do not match available covariates' names",
+                                     hidden(h5("Error: input does not match available covariates' names",
                                                id = "message_det_mn",
                                                style = "font-weight:bold;color:red;")),
                                      
@@ -390,7 +390,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                            )
                                        ),
                                      
-                                     hidden(h5("Input do not match available covariates' names (site covariates only)",
+                                     hidden(h5("Error: input does not match available covariates' names (site covariates only)",
                                                id = "message_state_mn",
                                                style = "font-weight:bold;color:red;")),
                                      
@@ -448,7 +448,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           
                           h2 ("Cost-Effective Animal Management via Environmental Capacity"),
                           
-                          textInput("gr", "Growth rate (per month)", "0.02775")%>%
+                          textInput("gr", "Growth rate (per month)", placeholder = "0.02775")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
@@ -456,7 +456,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                 )
                             ),
                           
-                          textInput("mth", "Achieve target in____months", "24")%>%
+                          textInput("mth", "Achieve target in____months", placeholder = "24")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
@@ -480,17 +480,17 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           
                           flowLayout(
                             
-                            textInput("le", "Longitude (E)", "104.0364"),   
+                            textInput("le", "Longitude (E)", placeholder = "104.0364"),   
                             
-                            textInput("lw", "Longitude (W)", "103.6051"),
+                            textInput("lw", "Longitude (W)", placeholder = "103.6051"),
                             
-                            textInput("ln", "Latitude (N)", "1.472969"),
+                            textInput("ln", "Latitude (N)", placeholder = "1.472969"),
                             
-                            textInput("ls", "Latitude (S)", "1.219747"),
+                            textInput("ls", "Latitude (S)", placeholder = "1.219747"),
                             
-                            textInput("nrows", "Number of rows", "56"),
+                            textInput("nrows", "Number of rows", placeholder = "56"),
                             
-                            textInput("ncols", "Number of columns", "96")
+                            textInput("ncols", "Number of columns", placeholder = "96")
                             
                           ),
                           
@@ -509,7 +509,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           
                           verbatimTextOutput("mini", placeholder = TRUE),
                           
-                          textInput("expct", "Density must be under____ per ha", "5")%>%
+                          textInput("expct", "Density must be under____ per ha", placeholder = "3")%>%
                             shinyInput_label_embed(
                               shiny_iconlink() %>%
                                 bs_embed_popover(
@@ -517,7 +517,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                 )
                             ),
                           
-                          hidden(h5("Target density too low! Please set a number higher than the background density",
+                          hidden(h5("Error: target density too low! Please set a number higher than the background density",
                                     id = "message_expect",
                                     style = "font-weight:bold;color:red;")),
                           
@@ -536,11 +536,11 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                   )
                               ),
                           
-                          hidden(h5("Covariates' names in the file do not match selected covarites to be managed",
+                          hidden(h5("Error: covariates' names in the file do not match selected covariates to be managed",
                                     id = "message_costcov",
                                     style = "font-weight:bold;color:red;")),
                           
-                          hidden(h5("Non-numeric items in column 2 to 5, please check the input file",
+                          hidden(h5("Error: non-numeric items in columns 2 to 5, please check the input file",
                                     id = "message_costnum",
                                     style = "font-weight:bold;color:red;")),
                           

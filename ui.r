@@ -61,7 +61,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                          shinyInput_label_embed(
                                            shiny_iconlink() %>%
                                              bs_embed_popover(
-                                               content = "A csv format data frame where each row is a detected individual. It must have two columns. One (named âdistanceâ) for distances to the detected individuals and the other (named âtransectâ) for transect names.", 
+                                               content = "A csv format data frame where each row is a detected individual. It must have two columns. One (named 'distance') for distances to the detected individuals and the other (named 'transect') for transect names.", 
                                                placement = "right", trigger = "hover"
                                              )
                                          ),
@@ -76,7 +76,8 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(
-                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. The number of rows must match the number of transects. The number of columns should equal to the number of covariates with one column per covariate. An additional column (named âlengthâ) should be attached as the last column for the length of transects (in the unit of meter, put 0 if using point transects).", 
+                                             content = "A csv format data frame of environmental variables (covariates) that vary at the site level. The number of rows must match the number of transects. The number of columns should equal to the number of covariates with one column per covariate. An additional column (named 
+'length') should be attached as the last column for the length of transects (in the unit of meter, put 0 if using point transects).", 
                                              placement = "right", trigger = "hover"
                                            )
                                        ),

@@ -581,7 +581,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           br(),
                           br(),
                           
-                          a(href="https://youtu.be/mg-trms15hI", "1. I want to watch a video tutorial.", style = "font-size:25px;"),
+                          a(href="https://youtu.be/gbfq3j2_BXc", "1. I want to watch a video tutorial.", style = "font-size:25px;"),
                           
                           br(),
                           

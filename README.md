@@ -25,7 +25,7 @@ shiny::runGitHub('CEAMEC', 'qt37t247')
 ```
 
 ## Video tutorial
-https://youtu.be/mg-trms15hI
+https://youtu.be/gbfq3j2_BXc
 
 
 ## Input data preparation

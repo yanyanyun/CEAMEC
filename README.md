@@ -2,6 +2,11 @@
 
 CEAMEC: Cost-Effective Animal Management via Environmental Capacity
 
+## Web-based quick access
+
+For those do not want to be troubled with R and have small projects, please feel free to access CEAMEC on the Shiny Cloud:
+https://qt37t247.shinyapps.io/ceamec/
+
 ## Installation
 
 * Please use the latest R: https://www.r-project.org/  

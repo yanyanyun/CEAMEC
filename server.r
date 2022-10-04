@@ -22,7 +22,8 @@ server <- function(input, output, session) {
                            transectNameCol="transect", dist.breaks=seq(0, round_any(max(distd[,1], na.rm = TRUE), as.numeric(input$binsize), f = ceiling), as.numeric(input$binsize)))
     req(input$covariates)
     covd <- read.csv(input$covariates$datapath, header=TRUE)
-    umf <- unmarkedFrameDS(y=as.matrix(yDat), siteCovs=covd[,1:(ncol(covd)-1)], survey=input$surveydist,
+    surveydist <- ifelse(sum(covd[,ncol(covd)])==0, "point", "line")
+    umf <- unmarkedFrameDS(y=as.matrix(yDat), siteCovs=covd[,1:(ncol(covd)-1)], survey=surveydist,
                            dist.breaks=seq(0, round_any(max(distd[,1], na.rm = TRUE), as.numeric(input$binsize), f = ceiling), as.numeric(input$binsize)), tlength=covd[,ncol(covd)], unitsIn="m")
     umf
   })  

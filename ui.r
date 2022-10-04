@@ -82,10 +82,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                                            )
                                        ),
                                      
-                                        
-                                       selectInput("surveydist", "Type of transects", c("", "point", "line"), selected = NULL),
-                                    
-                                     textInput("binsize", "Size of bin in meters", placeholder = "10", width = "70%")%>%
+                                       textInput("binsize", "Size of bin in meters", placeholder = "10", width = "70%")%>%
                                        shinyInput_label_embed(
                                          shiny_iconlink() %>%
                                            bs_embed_popover(

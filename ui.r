@@ -548,7 +548,7 @@ ui <- navbarPage("Cost-Effective Animal Management via Environmental Capacity",
                           
                           br(),
                           
-                          p(class = "second-p", "Minimum cost to reach the managemnet target"),
+                          p(class = "second-p", "Minimum cost to reach the management target"),
                           verbatimTextOutput("sum_v", placeholder = TRUE),
                           
                           br(),

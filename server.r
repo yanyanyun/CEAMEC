@@ -404,7 +404,7 @@ server <- function(input, output, session) {
   #model re-fit with parametric bootstraps (repeat count)
   observeEvent(input$Parboot_pcount, {
     
-    req(input$best_pcount, is.integer(input$nsims_pcount))
+    req(input$best_pcount, input$nsims_pcount)
     
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     
@@ -461,7 +461,7 @@ server <- function(input, output, session) {
     
     showModal(modalDialog("Job Submitted, please wait...", footer=NULL))
     
-    req(input$best_mn, is.integer(input$nsims_mn))
+    req(input$best_mn, input$nsims_mn)
     
     ##parboot function from unmarked
     fitstats <- function(fm) {

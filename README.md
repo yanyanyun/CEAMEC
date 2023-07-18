@@ -1,21 +1,49 @@
 # CEAMEC v1.0
-Cost-Effective Animal Management via Environmental Capacity
+
+CEAMEC: Cost-Effective Animal Management via Environmental Capacity
+
+## Web-based quick access
+
+For those do not want to be troubled with R and have small projects, please feel free to access CEAMEC on the Shiny Cloud:
+https://qt37t247.shinyapps.io/ceamec/
 
 ## Installation
 
+* Please use the latest R: https://www.r-project.org/  
+
+* Please use the latest RTools: https://cran.r-project.org/bin/windows/Rtools/
+
+* Please use the latest Java (version > 8): https://www.java.com/download
+
+### Install and run CEAMEC by copying the code below to your R console.
+
+Check whether all dependent R packages are installed (for the first time installing CEAMEC).
 ```R
-install.package("shiny")
-shiny::runGitHub('CEAMEC', 'yanyanyun')
+list.of.packages <- c("shiny","rgdal","leaflet","shinycssloaders","shinythemes","tibble","unmarked","DT","data.table","xlsx","rgenoud","htmltools","bsplus","dplyr","shinycssloaders","rgeos","plyr","shinyjs")
+req.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(req.packages)) install.packages(req.packages, dependencies = TRUE)
 ```
+
+Install and run CEAMEC.
+```R
+shiny::runGitHub('CEAMEC', 'qt37t247')
+```
+
+## Video tutorial
+https://youtu.be/gWALmOzZHJc
+
 
 ## Input data preparation
 
-CEAMEC requires users to upload two files(in .csv format):
+Please prepare the input files according to the structure of R package unmarked based on survey types:
 
-A density file of modified output from the results of hierarchical modelling with R package [unmarked](https://cran.r-project.org/web/packages/unmarked/) (see example file "density_CEAMEC.csv") 
+* Distance sampling: https://cran.r-project.org/web/packages/unmarked/vignettes/distsamp.html
 
-A cost file listing density model coefficients and unit costs of items to be managed (see example file "cost_CEAMEC.csv")  
+* Repeated count: https://studylib.net/doc/6696451/fitting-royle-s-n-mixture-model-with-package-unmarked-in-...
+
+* Removal sampling: https://rdrr.io/cran/unmarked/man/ovendata.html
+
+* Double observer sampling: https://rdrr.io/cran/unmarked/man/unmarkedFrameMPois.html
 
 ## Contact author
-
-yanyanyun1128@gmail.com
+Dr. Qian Tang    <<tangbenjamin@hotmail.com>>
